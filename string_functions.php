@@ -65,7 +65,7 @@
 
     // echo $output;
 
-    // $values = array(true, false, null, 'abc', 33, '33', 22.4, '22.4','',' ',0,'0');
+    // $values = array(true, false, null, 'abc', 33, '33', 22.4 , '22.4','',' ',0,'0');
 
     // foreach($values as $value){
     //     if(is_string($value)){
