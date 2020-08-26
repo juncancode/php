@@ -69,7 +69,7 @@ button {
 }
 
 .alert-danger {
-    background-color:rgb(219, 54, 48);
+    color:rgb(219, 54, 48);
 }
 
 .alert-success {

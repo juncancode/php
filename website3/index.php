@@ -1,7 +1,6 @@
 <?php 
     // Message Vars
-    $msg = '';
-    $msgClass = '';
+    $msg = [];
     
     // Check for submit
     if(filter_has_var(INPUT_POST,'submit')){
@@ -15,9 +14,10 @@
             // Passed
             // Check Email 
             if(filter_var($email, FILTER_VALIDATE_EMAIL) === false ){
-                // Failed
-                $msg = 'Please use a valid email';
-                $msgClass = 'alert-danger';
+                $msg['email'] = [
+                    'msg' => 'Please use a valid email',
+                    'class' => 'alert-danger'
+                ];
             } else { 
                 // Passed
                 $toEmail = 'keyos27@gmail.com';
@@ -37,18 +37,24 @@
 
                     if(mail($toEmail, $subject, $body, $headers)){
                         // Email Sent
-                        $msg = "Your email has been sent";
-                        $msgClass = 'alert-success';
+                        $msg['default'] = [
+                            'msg' => 'Your email has been sent',
+                            'class' => 'alert-success'
+                         ];
                     } else {
                         // Failed
-                        $msg = "Your email was not sent";
-                        $msgClass = 'alert-danger';
+                        $msg['default'] = [
+                            'msg' => 'Your email was not sent',
+                            'class' => 'alert-danger'
+                         ];
                     }
             }
         } else {
             // Failed
-            $msg = 'Please fill in all fields';
-            $msgClass = 'alert-danger';
+            $msg['default'] = [
+                'msg' => 'Please fill in all fields',
+                'class' => 'alert-danger'
+             ];
         }
     }
 ?>
@@ -70,21 +76,30 @@
         </div>
      </nav>
      <div class="container">
-         <?php if($msg != ''): ?>
-            <div class="alert <?php echo $msgClass; ?>"><?php echo $msg;?></div>
+        <?php if(isset($msg['default'])): ?>
+            <div class="alert <?php echo $msg['default']['class']; ?>"><?php echo $msg['default']['msg']?></div>
          <?php endif; ?>
         <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
             <div class="form-group">
                 <label for="name">Name</label> 
                 <input type="text" name="name" class="form-control" value="<?php echo isset($_POST['name']) ? $name : ''; ?>">
+                <?php if(isset($msg['name'])): ?>
+                <div class="alert <?php echo $msg['name']['class']; ?>"><?php echo $msg['name']['msg']?></div>
+                <?php endif; ?>
             </div>
             <div class="form-group">
                 <label for="name">Email</label>
                 <input type="text" name="email" class="form-control" value="<?php echo isset($_POST['email']) ? $email : ''; ?>">
+                <?php if(isset($msg['email'])): ?>
+                <div class="alert <?php echo $msg['email']['class']; ?>"><?php echo $msg['email']['msg']?></div>
+                <?php endif; ?>
             </div>
             <div class="form-group">
                 <label for="name">Message</label>
                 <textarea name="message" class="form-control"><?php echo isset($_POST['message']) ? $message : ''; ?></textarea>
+                <?php if(isset($msg['message'])): ?>
+                <div class="alert <?php echo $msg['message']['class']; ?>"><?php echo $msg['message']['msg']?></div>
+             <?php endif; ?>
             </div>
             <button type="submit" name="submit" class="btn btn-primary">
             Submit</button>
